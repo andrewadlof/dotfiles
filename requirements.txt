@@ -28,7 +28,7 @@ plotly
 pre-commit
 pulp
 pyaml
-pyarrow==10.0.1
+pyarrow==14.0.1
 pycodestyle
 pydantic
 pylint
