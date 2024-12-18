@@ -127,10 +127,32 @@ else
     fi
 fi
 
-# Install Oh My Posh
+# Install Oh My Posh and required fonts
 if command_exists oh-my-posh; then
     print_message "green" "Oh My Posh is already installed"
 else
+    print_message "yellow" "Installing Oh My Posh and required fonts..."
+    
+    # Create fonts directory if it doesn't exist
+    mkdir -p ~/.local/share/fonts
+    
+    # Install Hack font
+    print_message "yellow" "Installing Hack font..."
+    wget -O hack.zip https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip
+    unzip -o hack.zip -d ~/.local/share/fonts/hack
+    rm hack.zip
+    
+    # Install JetBrains Mono Nerd Font
+    print_message "yellow" "Installing JetBrains Mono Nerd Font..."
+    wget -O jetbrains.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+    unzip -o jetbrains.zip -d ~/.local/share/fonts/jetbrains
+    rm jetbrains.zip
+    
+    # Update font cache
+    fc-cache -f -v
+    print_message "green" "Fonts installed successfully!"
+    
+    # Install Oh My Posh
     print_message "yellow" "Installing Oh My Posh..."
     curl -s https://ohmyposh.dev/install.sh | bash -s
 
