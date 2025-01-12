@@ -59,6 +59,7 @@ plugins=(
 # Load completions
 autoload -U compinit && compinit
 
+# Refresh OMZ
 source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
