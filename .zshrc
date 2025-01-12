@@ -91,6 +91,7 @@ alias dir='dir --color=auto'
 # Fuzzy Find
 alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
 alias fz="find . -maxdepth 1 | sed 's/^\.\///g' | fzf --preview 'fzf-previewer {}'"
+
 # Text Editor
 alias vim='nvim'
 alias vi='nvim'
