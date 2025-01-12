@@ -35,21 +35,21 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
 
 # OMZ Plugins
 plugins=(
-	aliases
+  aliases
   command-not-found
-	copyfile
-	copypath
-	docker
-	dirhistory
-	extract
-	fzf
-	git
-	node
-	python
-	tmux
-	vscode
-	sudo
-	z
+  copyfile
+  copypath
+  docker
+  dirhistory
+  extract
+  fzf
+  git
+  node
+  python
+  tmux
+  vscode
+  sudo
+  z
   zsh-autosuggestions
   zsh-completions
   zsh-expand
