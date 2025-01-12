@@ -50,9 +50,9 @@ plugins=(
 	vscode
 	sudo
 	z
-	zsh-autosuggestions
+  zsh-autosuggestions
   zsh-completions
-	zsh-expand
+  zsh-expand
   zsh-syntax-highlighting
 )
 
