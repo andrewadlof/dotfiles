@@ -123,6 +123,8 @@ alias j='jobs -l'
 alias p='ps -f'
 alias update='sudo apt update && sudo apt upgrade'
 alias ports='netstat -tulanp'
+alias clip="xsel --input --clipboard"
+alias lastcopy='fc -ln -1 | xsel -b'
 
 # Network
 alias myip='curl http://ipecho.net/plain; echo'
@@ -141,3 +143,7 @@ alias python="python3.12"
 eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json')"
 eval "$(zoxide init zsh)"
 eval $(thefuck --alias fix)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
