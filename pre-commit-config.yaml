@@ -2,16 +2,14 @@
 repos:
   - repo: local
     hooks:
-      - id: black
-        name: black
-        entry: black
+      - id: ruff-format
+        name: ruff-format
         language: system
-        types: [python]
-      - id: isort
-        name: isort
-        entry: isort --filter-files
+        args: [--config=pyproject.toml]
+      - id: ruff
+        name: ruff
         language: system
-        files: \.py$
+        args: [--fix, --config=pyproject.toml]
       - id: pycln
         name: pycln
         entry: pycln --config=pyproject.toml
@@ -58,7 +56,10 @@ repos:
           - --ignore-words-list
           - sql
           - --skip
-          - '*.ipynb'
+          - "*.ipynb"
           - --quiet-level
-          - '3'
+          - "3"
         exclude: \.(png|jpg|gif|pdf|bin|log)$
+ci:
+  autofix_commit_msg: "style: auto fixes from pre-commit hooks"
+  autoupdate_commit_msg: "ci: pre-commit autoupdate"
