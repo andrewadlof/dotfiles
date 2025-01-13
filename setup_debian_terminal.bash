@@ -26,6 +26,7 @@ sudo apt install -y \
     vim \
     wget \
     xclip \
+    xsel \
     zip \
     zsh
 
