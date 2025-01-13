@@ -172,6 +172,9 @@ else
     fi
 fi
 
+# Install zsh plugins
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
 # Install fzf-tab
 if [ -d "$ZSH_CUSTOM/plugins/fzf-tab" ]; then
     print_message "green" "fzf-tab is already installed"
