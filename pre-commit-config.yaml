@@ -6,11 +6,13 @@ repos:
         name: ruff-format
         entry: ruff format
         language: system
+        types: [python, jupyter]
         args: [--config=pyproject.toml]
       - id: ruff-check
         name: ruff-check
         entry: ruff check
         language: system
+        types: [python, jupyter]
         args: [--fix, --config=pyproject.toml]
       - id: pycln
         name: pycln
