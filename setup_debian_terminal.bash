@@ -25,6 +25,7 @@ sudo apt install -y \
     tree \
     vim \
     wget \
+    xclip \
     zip \
     zsh
 
