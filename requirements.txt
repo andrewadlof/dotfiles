@@ -17,8 +17,15 @@ GitPython
 highspy
 keyring
 leaflet
-matplotlib
+matplotliba
+mdformat
+mdformat-gfm
+mdformat-footnote
+mdformat-frontmatter
+mdformat-pyproject
 moto
+mypy
+mypy-extensions
 nested-lookup
 nltk
 numpy
@@ -26,9 +33,11 @@ openpyxl
 pandas
 plotly
 pre-commit
+pre-commit-hooks
 pulp
 pyaml
-pyarrow==14.0.1
+pyarrow==10.0.1
+pycln
 pycodestyle
 pydantic
 pylint
@@ -36,6 +45,7 @@ pymc
 pyomo
 pyOpenSSL==23.2.0
 pytest
+pytest-cov
 pytz
 ruff
 seedir
@@ -46,8 +56,9 @@ seaborn
 selenium
 siuba
 snowflake
-snowflake-connector-python==3.12.3
+snowflake-connector-python==3.0.3
 SQLAlchemy
+sqlfluff
 sqlparse
 statsmodels
 thefuck
@@ -55,5 +66,6 @@ tqdm
 tqdm
 typing
 typing_extensions
+uv
 virtualenv
 virtualenvwrapper
