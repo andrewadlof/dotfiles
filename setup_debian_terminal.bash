@@ -15,6 +15,7 @@ sudo apt install -y \
     git \
     gpg \
     htop \
+    python3.10-venv \
     neofetch \
     nodejs \
     ripgrep \
@@ -47,6 +48,35 @@ print_message() {
         *)        echo "$message" ;;
     esac
 }
+
+# Install nvm (Node Version Manager)
+if [ -d "$HOME/.nvm" ]; then
+    print_message "green" "nvm is already installed"
+else
+    print_message "yellow" "Installing nvm..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+    # Load nvm immediately for the rest of the script
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    
+    if command_exists nvm; then
+        print_message "green" "nvm installed successfully!"
+        
+        # Install latest LTS version of Node.js
+        print_message "yellow" "Installing latest LTS version of Node.js..."
+        if nvm install --lts; then
+            # Set as default
+            nvm alias default 'lts/*'
+            print_message "green" "Node.js LTS version installed and set as default!"
+        else
+            print_message "red" "Failed to install Node.js LTS version"
+        fi
+    else
+        print_message "red" "Failed to install nvm"
+    fi
+fi
+
 
 # Install Rust first as it's required for several other tools
 if command_exists rustc; then
