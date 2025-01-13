@@ -6,6 +6,9 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export EZA_COLORS="$(cat ~/.config/eza/colors.config)"
 
+# Set FUNCNEST limit
+FUNCNEST=1000
+
 # Update OMZ without asking
 zstyle ':omz:update' mode auto
 
@@ -33,6 +36,9 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
 
+# Load completions
+autoload -U compinit && compinit
+
 # OMZ Plugins
 plugins=(
   aliases
@@ -43,6 +49,7 @@ plugins=(
   dirhistory
   extract
   fzf
+  fzf-tab
   git
   node
   python
@@ -53,11 +60,7 @@ plugins=(
   zsh-autosuggestions
   zsh-completions
   zsh-expand
-  zsh-syntax-highlighting
 )
-
-# Load completions
-autoload -U compinit && compinit
 
 # Refresh OMZ
 source $ZSH/oh-my-zsh.sh
@@ -131,6 +134,10 @@ alias meminfo='free -m -l -t'
 alias psmem='ps auxf | sort -nr -k 4'  # Memory processes
 alias pscpu='ps auxf | sort -nr -k 3'  # CPU processes
 
+# Programming
+alias python="python3.12"
+
 # Exec Statements
 eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json')"
 eval "$(zoxide init zsh)"
+eval $(thefuck --alias fix)
