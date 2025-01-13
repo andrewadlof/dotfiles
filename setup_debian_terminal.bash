@@ -175,21 +175,30 @@ fi
 # Install zsh plugins
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-# Install fzf-tab
-if [ -d "$ZSH_CUSTOM/plugins/fzf-tab" ]; then
-    print_message "green" "fzf-tab is already installed"
-else
-    print_message "yellow" "Installing fzf-tab..."
-    git clone https://github.com/Aloxaf/fzf-tab "$ZSH_CUSTOM/plugins/fzf-tab"
-fi
+# Function to install zsh plugin
+install_zsh_plugin() {
+    local plugin_name=$1
+    local repo_url=$2
+    local plugin_dir="$ZSH_CUSTOM/plugins/$plugin_name"
 
-# Install zsh-completions
-if [ -d "$ZSH_CUSTOM/plugins/zsh-completions" ]; then
-    print_message "green" "zsh-completions is already installed"
-else
-    print_message "yellow" "Installing zsh-completions..."
-    git clone https://github.com/zsh-users/zsh-completions "$ZSH_CUSTOM/plugins/zsh-completions"
-fi
+    if [ -d "$plugin_dir" ]; then
+        print_message "green" "$plugin_name is already installed"
+    else
+        print_message "yellow" "Installing $plugin_name..."
+        if git clone "$repo_url" "$plugin_dir"; then
+            print_message "green" "$plugin_name installed successfully!"
+        else
+            print_message "red" "Failed to install $plugin_name"
+        fi
+    fi
+}
+
+# Install all zsh plugins
+install_zsh_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab"
+install_zsh_plugin "zsh-completions" "https://github.com/zsh-users/zsh-completions"
+install_zsh_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
+install_zsh_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
+install_zsh_plugin "zsh-expand" "https://github.com/MenkeTechnologies/zsh-expand"
 
 # Install Oh My Posh and required fonts
 if command_exists oh-my-posh; then
