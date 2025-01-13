@@ -15,9 +15,10 @@ Flask
 fzf-bin
 GitPython
 highspy
+jsonlint
 keyring
 leaflet
-matplotliba
+matplotlib
 mdformat
 mdformat-gfm
 mdformat-footnote
@@ -69,3 +70,5 @@ typing_extensions
 uv
 virtualenv
 virtualenvwrapper
+yamlfix
+yamllint
