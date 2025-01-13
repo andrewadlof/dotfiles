@@ -147,6 +147,19 @@ else
     fi
 fi
 
+# Install zoxide
+if command_exists zoxide; then
+    ZOXIDE_VERSION=$(zoxide --version)
+    print_message "green" "zoxide is already installed: $ZOXIDE_VERSION"
+else
+    print_message "yellow" "Installing zoxide..."
+    if cargo install zoxide; then
+        print_message "green" "zoxide installed successfully!"
+    else
+        print_message "red" "Failed to install zoxide"
+    fi
+fi
+
 # Install Oh My Zsh
 if [ -d "$HOME/.oh-my-zsh" ]; then
     print_message "green" "Oh My Zsh is already installed"
@@ -157,6 +170,22 @@ else
     else
         print_message "red" "Failed to install Oh My Zsh"
     fi
+fi
+
+# Install fzf-tab
+if [ -d "$ZSH_CUSTOM/plugins/fzf-tab" ]; then
+    print_message "green" "fzf-tab is already installed"
+else
+    print_message "yellow" "Installing fzf-tab..."
+    git clone https://github.com/Aloxaf/fzf-tab "$ZSH_CUSTOM/plugins/fzf-tab"
+fi
+
+# Install zsh-completions
+if [ -d "$ZSH_CUSTOM/plugins/zsh-completions" ]; then
+    print_message "green" "zsh-completions is already installed"
+else
+    print_message "yellow" "Installing zsh-completions..."
+    git clone https://github.com/zsh-users/zsh-completions "$ZSH_CUSTOM/plugins/zsh-completions"
 fi
 
 # Install Oh My Posh and required fonts
