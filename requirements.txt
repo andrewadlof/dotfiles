@@ -47,6 +47,7 @@ pyomo
 pyOpenSSL==23.2.0
 pytest
 pytest-cov
+python-lsp-server[all]
 pytz
 ruff
 seedir
