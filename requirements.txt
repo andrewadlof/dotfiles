@@ -55,7 +55,6 @@ scikit-learn
 scipy
 seaborn
 selenium
-siuba
 snowflake
 snowflake-connector-python==3.0.3
 SQLAlchemy
