@@ -15,6 +15,10 @@ sudo apt install -y \
     git \
     gpg \
     htop \
+    imagemagick \
+    libmagickwand-dev \
+    liblua5.4-dev \
+    luajit \
     python3.10-venv \
     neofetch \
     nodejs \
