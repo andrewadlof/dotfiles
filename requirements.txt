@@ -15,6 +15,8 @@ Flask
 fzf-bin
 GitPython
 highspy
+jupyterlab
+jupyterlab-lsp
 jsonlint
 keyring
 leaflet
