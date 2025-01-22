@@ -3,6 +3,7 @@ blackcellmagic
 bokeh
 boto3
 botocore
+catppuccin-jupyterlab
 codespell
 configparser
 cufflinks
