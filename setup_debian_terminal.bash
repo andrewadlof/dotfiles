@@ -270,8 +270,5 @@ if [ "$SHELL" != "$(which zsh)" ]; then
     print_message "yellow" "Default shell changed to zsh. Please log out and log back in for changes to take effect."
 fi
 
-# Clean up
-rm -f lazygit.tar.gz
-
 # Launch zsh
 exec zsh
