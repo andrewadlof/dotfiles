@@ -56,7 +56,6 @@ plugins=(
   tmux
   vscode
   sudo
-  z
   zsh-autosuggestions
   zsh-completions
   zsh-expand
@@ -141,7 +140,6 @@ alias python="python3.12"
 
 # Exec Statements
 eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json')"
-eval "$(zoxide init zsh)"
 eval $(thefuck --alias fix)
 
 export NVM_DIR="$HOME/.nvm"
