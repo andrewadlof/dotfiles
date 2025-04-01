@@ -272,3 +272,6 @@ fi
 
 # Launch zsh
 exec zsh
+
+# Change to home directory
+cd ~
