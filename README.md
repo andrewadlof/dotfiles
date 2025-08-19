@@ -1,2 +1,2 @@
-# dotfiles-debian
-My configuration dotfiles to setup a Debian-based Linux Environement
+# Dotfiles
+My configuration dotfiles to setup either a Debian-based Linux environment or a MacOS environment
