@@ -1,0 +1,553 @@
+---
+- name: Setup dotfiles and terminal environment on macOS
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  vars:
+    homebrew_formulae:
+      - ansible
+      - aom
+      - aribb24
+      - arpack
+      - arping
+      - assimp
+      - autogen
+      - awscli
+      - bat
+      - bdw-gc
+      - brotli
+      - c-ares
+      - ca-certificates
+      - cairo
+      - certifi
+      - cffi
+      - cjson
+      - cmake
+      - coreutils
+      - cryptography
+      - curl
+      - dark-mode
+      - dav1d
+      - dbus
+      - docker
+      - docker-completion
+      - docker-compose
+      - double-conversion
+      - duckdb
+      - duti
+      - eigen
+      - epstool
+      - eza
+      - fd
+      - ffmpeg
+      - fftw
+      - fig2dev
+      - flac
+      - fltk
+      - fontconfig
+      - freetype
+      - frei0r
+      - fribidi
+      - fzf
+      - gcc
+      - gd
+      - gdrive
+      - gettext
+      - gh
+      - ghostscript
+      - giflib
+      - git
+      - gl2ps
+      - glib
+      - glpk
+      - gmp
+      - gnupg
+      - gnutls
+      - go@1.24
+      - graphicsmagick
+      - graphite2
+      - guile
+      - harfbuzz
+      - hdf5
+      - highway
+      - htop
+      - hugo
+      - hunspell
+      - hwloc
+      - icu4c@77
+      - imagemagick
+      - imath
+      - iperf3
+      - ipython
+      - isl
+      - jasper
+      - jbig2dec
+      - jpeg-turbo
+      - jpeg-xl
+      - jq
+      - jupyterlab
+      - krb5
+      - kubernetes-cli
+      - lame
+      - leptonica
+      - libaec
+      - libarchive
+      - libass
+      - libassuan
+      - libavif
+      - libb2
+      - libbluray
+      - libde265
+      - libdeflate
+      - libevent
+      - libgcrypt
+      - libgit2
+      - libgpg-error
+      - libheif
+      - libidn
+      - libidn2
+      - libksba
+      - liblqr
+      - libmaxminddb
+      - libmicrohttpd
+      - libmng
+      - libmpc
+      - libnet
+      - libnghttp2
+      - libnghttp3
+      - libngtcp2
+      - libogg
+      - libomp
+      - libplacebo
+      - libpng
+      - libpq
+      - libraw
+      - librist
+      - libsamplerate
+      - libsmi
+      - libsndfile
+      - libsodium
+      - libsoxr
+      - libssh
+      - libssh2
+      - libtasn1
+      - libtiff
+      - libtool
+      - libunibreak
+      - libunistring
+      - libusb
+      - libuv
+      - libvidstab
+      - libvmaf
+      - libvorbis
+      - libvpx
+      - libx11
+      - libxau
+      - libxcb
+      - libxdmcp
+      - libxext
+      - libxrender
+      - libyaml
+      - little-cms2
+      - llvm
+      - lpeg
+      - lua
+      - luajit
+      - luv
+      - lz4
+      - lzo
+      - m4
+      - make
+      - mariadb-connector-c
+      - markdown
+      - mbedtls
+      - md4c
+      - molten-vk
+      - mpdecimal
+      - mpfr
+      - mpg123
+      - mpv
+      - mujs
+      - ncurses
+      - neofetch
+      - neovim
+      - netpbm
+      - nettle
+      - ngrep
+      - node
+      - npth
+      - octave
+      - oh-my-posh
+      - oniguruma
+      - open-mpi
+      - openblas
+      - opencore-amr
+      - openexr
+      - openjpeg
+      - openssl@3
+      - opus
+      - p11-kit
+      - pandoc
+      - pango
+      - pcre2
+      - pgcli
+      - pgcopydb
+      - pinentry
+      - pipx
+      - pixman
+      - pkgconf
+      - plotutils
+      - pmix
+      - portaudio
+      - postgresql@14
+      - pre-commit
+      - pstoedit
+      - pwgen
+      - pycparser
+      - pyqt
+      - python@3.11
+      - python@3.13
+      - qhull
+      - qpdf
+      - qrupdate
+      - qscintilla2
+      - qt
+      - r
+      - rapidjson
+      - rav1e
+      - rclone
+      - readline
+      - ripgrep
+      - rtmpdump
+      - rubberband
+      - ruby
+      - rust
+      - screenresolution
+      - sdl2
+      - shaderc
+      - shared-mime-info
+      - simdjson
+      - sloccount
+      - snappy
+      - speex
+      - speexdsp
+      - sqlite
+      - srt
+      - stockfish
+      - stow
+      - suite-sparse
+      - sundials
+      - svt-av1
+      - sysbench
+      - tcl-tk@8
+      - terraform
+      - tesseract
+      - texinfo
+      - thefuck
+      - theora
+      - tmux
+      - tree
+      - tree-sitter
+      - uchardet
+      - unbound
+      - unibilium
+      - utf8proc
+      - uv
+      - vapoursynth
+      - vim
+      - vulkan-headers
+      - vulkan-loader
+      - webp
+      - wget
+      - wireshark
+      - x264
+      - x265
+      - xorgproto
+      - xvid
+      - xz
+      - yt-dlp
+      - z
+      - z3
+      - zellij
+      - zeromq
+      - zimg
+      - zoxide
+      - zsh
+      - zstd
+
+    homebrew_casks:
+      - claude-code
+      - cursor
+      - drawio
+      - duet
+      - font-hack-nerd-font
+      - font-jetbrains-mono-nerd-font
+      - ghostty
+      - quarto
+      - rstudio
+      - visual-studio-code
+      - warp
+
+    python_packages:
+      - black
+      - blackcellmagic
+      - bokeh
+      - boto3
+      - botocore
+      - catppuccin-jupyterlab
+      - codespell
+      - configparser
+      - cufflinks
+      - dash
+      - DateTime
+      - Django
+      - emoji
+      - fastparquet
+      - Flask
+      - fzf-bin
+      - GitPython
+      - highspy
+      - jupyterlab
+      - jupyterlab-lsp
+      - jsonlint
+      - keyring
+      - leaflet
+      - matplotlib
+      - mdformat
+      - mdformat-gfm
+      - mdformat-footnote
+      - mdformat-frontmatter
+      - mdformat-pyproject
+      - moto
+      - mypy
+      - mypy-extensions
+      - nested-lookup
+      - nltk
+      - numpy
+      - openpyxl
+      - pandas
+      - plotly
+      - pre-commit
+      - pre-commit-hooks
+      - pulp
+      - pyaml
+      - "pyarrow==10.0.1"
+      - pycln
+      - pycodestyle
+      - pydantic
+      - pylint
+      - pymc
+      - pyomo
+      - "pyOpenSSL==23.2.0"
+      - pytest
+      - pytest-cov
+      - "python-lsp-server[all]"
+      - pytz
+      - ruff
+      - seedir
+      - s3fs
+      - scikit-learn
+      - scipy
+      - seaborn
+      - selenium
+      - snowflake
+      - "snowflake-connector-python==3.13.1"
+      - SQLAlchemy
+      - sqlfluff
+      - sqlparse
+      - statsmodels
+      - thefuck
+      - tqdm
+      - typing
+      - typing_extensions
+      - uv
+      - virtualenv
+      - virtualenvwrapper
+      - yamlfix
+      - yamllint
+
+  tasks:
+    - name: Check if Homebrew is installed
+      command: brew --version
+      register: homebrew_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install Homebrew
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      when: homebrew_check.rc != 0
+
+    - name: Add Homebrew to PATH for Apple Silicon Macs
+      lineinfile:
+        path: ~/.zprofile
+        line: 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+        create: yes
+      when: ansible_architecture == "arm64"
+
+    - name: Add Homebrew to PATH for Intel Macs
+      lineinfile:
+        path: ~/.zprofile
+        line: 'eval "$(/usr/local/bin/brew shellenv)"'
+        create: yes
+      when: ansible_architecture == "x86_64"
+
+    - name: Source Homebrew environment for Apple Silicon
+      shell: eval "$(/opt/homebrew/bin/brew shellenv)"
+      when: ansible_architecture == "arm64"
+
+    - name: Source Homebrew environment for Intel
+      shell: eval "$(/usr/local/bin/brew shellenv)"
+      when: ansible_architecture == "x86_64"
+
+    - name: Update Homebrew
+      homebrew:
+        update_homebrew: yes
+
+    - name: Install Homebrew formulae
+      homebrew:
+        name: "{{ homebrew_formulae }}"
+        state: present
+
+    - name: Install Homebrew casks
+      homebrew_cask:
+        name: "{{ homebrew_casks }}"
+        state: present
+
+    - name: Check if nvm is installed
+      stat:
+        path: ~/.nvm
+      register: nvm_dir
+
+    - name: Install nvm
+      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+      when: not nvm_dir.stat.exists
+
+    - name: Install latest LTS Node.js via nvm
+      shell: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm install --lts
+        nvm alias default 'lts/*'
+      when: not nvm_dir.stat.exists
+
+    - name: Check if Rust is installed
+      command: rustc --version
+      register: rust_check
+      failed_when: false
+      changed_when: false
+
+    - name: Install Rust
+      shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      when: rust_check.rc != 0
+
+    - name: Source Rust environment
+      shell: source ~/.cargo/env
+      when: rust_check.rc != 0
+
+    - name: Install Rust-based tools via Cargo
+      shell: |
+        source ~/.cargo/env
+        cargo install {{ item }}
+      with_items:
+        - zellij
+        - eza
+        - zoxide
+      when: rust_check.rc != 0
+
+    - name: Check if Oh My Zsh is installed
+      stat:
+        path: ~/.oh-my-zsh
+      register: ohmyzsh_dir
+
+    - name: Install Oh My Zsh
+      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+      when: not ohmyzsh_dir.stat.exists
+
+    - name: Install zsh plugins
+      git:
+        repo: "{{ item.repo }}"
+        dest: "~/.oh-my-zsh/custom/plugins/{{ item.name }}"
+      with_items:
+        - { name: "fzf-tab", repo: "https://github.com/Aloxaf/fzf-tab" }
+        - { name: "zsh-completions", repo: "https://github.com/zsh-users/zsh-completions" }
+        - { name: "zsh-syntax-highlighting", repo: "https://github.com/zsh-users/zsh-syntax-highlighting" }
+        - { name: "zsh-autosuggestions", repo: "https://github.com/zsh-users/zsh-autosuggestions" }
+        - { name: "zsh-expand", repo: "https://github.com/MenkeTechnologies/zsh-expand" }
+
+    - name: Install colorls gem
+      gem:
+        name: colorls
+        state: present
+
+    - name: Install Python packages
+      pip:
+        name: "{{ python_packages }}"
+        state: present
+        executable: pip3
+
+    - name: Run the setup_macos_terminal.bash script
+      script: ./setup_macos_terminal.bash
+      args:
+        creates: ~/.setup_completed
+
+    - name: Create marker file to indicate setup completion
+      file:
+        path: ~/.setup_completed
+        state: touch
+
+    - name: Backup existing .zshrc if it exists
+      copy:
+        src: ~/.zshrc
+        dest: ~/.zshrc.backup
+        backup: yes
+      ignore_errors: yes
+
+    - name: Copy .zshrc to home directory
+      copy:
+        src: ./.zshrc
+        dest: ~/.zshrc
+        backup: yes
+
+    - name: Create .config directory in home if it doesn't exist
+      file:
+        path: ~/.config
+        state: directory
+        mode: '0755'
+
+    - name: Copy .config directory contents to ~/.config
+      synchronize:
+        src: ./.config/
+        dest: ~/.config/
+        recursive: yes
+        delete: no
+        rsync_opts:
+          - "--exclude=.ipynb_checkpoints"
+          - "--exclude=__pycache__"
+
+    - name: Set correct permissions for config files
+      file:
+        path: ~/.config
+        state: directory
+        recurse: yes
+        mode: '0755'
+
+    - name: Change default shell to zsh
+      shell: chsh -s $(which zsh)
+      register: shell_change
+      failed_when: false
+
+    - name: Display completion message
+      debug:
+        msg: |
+          Setup complete! Please restart your terminal to enjoy your new setup.
+          
+          The following has been installed and configured:
+          - All Homebrew formulae and casks from your current setup
+          - Python packages from requirements.txt
+          - Oh My Zsh with custom plugins
+          - Rust-based tools (eza, zellij, zoxide)
+          - nvm with latest LTS Node.js
+          - Your custom .zshrc configuration
+          - All configuration files in ~/.config
+          
+          Please restart your terminal or run 'source ~/.zshrc' to activate the new configuration.
