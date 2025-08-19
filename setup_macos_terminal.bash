@@ -1,14 +1,26 @@
 #!/bin/bash
 
-# Update system
-sudo apt update && sudo apt -y upgrade
+# Check if Homebrew is installed, if not install it
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # Add Homebrew to PATH for Apple Silicon Macs
+    if [[ "$(uname -m)" == "arm64" ]]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+fi
 
-# Install packages
-sudo apt install -y \
-    apt-transport-https \
+# Update Homebrew
+brew update
+
+# Install packages using Homebrew
+brew install \
     bat \
-    build-essential \
-    ca-certificates \
     cmake \
     curl \
     fzf \
@@ -16,28 +28,30 @@ sudo apt install -y \
     gpg \
     htop \
     imagemagick \
-    libmagickwand-dev \
-    liblua5.4-dev \
+    lua \
     luajit \
-    python3.10-venv \
     neofetch \
-    nodejs \
+    node \
     ripgrep \
-    ruby-full \
-    software-properties-common \
+    ruby \
     tmux \
     tree \
     vim \
     wget \
-    xclip \
-    xsel \
-    zip \
     zoxide \
     zsh
 
-# create symlink to bat library
-mkdir -p ~/.local/bin
-ln -s /usr/bin/batcat ~/.local/bin/bat
+# Install casks (GUI applications and fonts)
+brew install --cask \
+    font-jetbrains-mono-nerd-font \
+    font-hack-nerd-font
+
+# macOS equivalent of xclip/xsel is pbcopy/pbpaste (built-in)
+# No need to install separately
+
+# Note: python3-venv equivalent - use python3 -m venv (built-in with Python 3)
+# Install Python 3 if not already present
+brew install python@3.11
 
 # Function to check if a command exists
 command_exists() {
@@ -83,7 +97,6 @@ else
         print_message "red" "Failed to install nvm"
     fi
 fi
-
 
 # Install Rust first as it's required for several other tools
 if command_exists rustc; then
@@ -152,7 +165,7 @@ else
     fi
 fi
 
-# Install zoxide
+# Install zoxide (already installed via brew, but check if cargo version is preferred)
 if command_exists zoxide; then
     ZOXIDE_VERSION=$(zoxide --version)
     print_message "green" "zoxide is already installed: $ZOXIDE_VERSION"
@@ -205,73 +218,72 @@ install_zsh_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-s
 install_zsh_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
 install_zsh_plugin "zsh-expand" "https://github.com/MenkeTechnologies/zsh-expand"
 
-# Install Oh My Posh and required fonts
+# Install Oh My Posh (fonts already installed via Homebrew)
 if command_exists oh-my-posh; then
     print_message "green" "Oh My Posh is already installed"
 else
-    print_message "yellow" "Installing Oh My Posh and required fonts..."
-    
-    # Create fonts directory if it doesn't exist
-    mkdir -p ~/.local/share/fonts
-    
-    # Install Hack font
-    print_message "yellow" "Installing Hack font..."
-    wget -O hack.zip https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip
-    unzip -o hack.zip -d ~/.local/share/fonts/hack
-    rm hack.zip
-    
-    # Install JetBrains Mono Nerd Font
-    print_message "yellow" "Installing JetBrains Mono Nerd Font..."
-    wget -O jetbrains.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
-    unzip -o jetbrains.zip -d ~/.local/share/fonts/jetbrains
-    rm jetbrains.zip
-    
-    # Update font cache
-    fc-cache -f -v
-    print_message "green" "Fonts installed successfully!"
-    
-    # Install Oh My Posh
     print_message "yellow" "Installing Oh My Posh..."
-    curl -s https://ohmyposh.dev/install.sh | bash -s
-
-    # Add Oh My Posh initialization to .zshrc if not already present
-    if ! grep -q "eval \"\$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json')\"" "$HOME/.zshrc"; then
-        echo 'eval "$(oh-my-posh init zsh --config '"'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json'"')"' >> "$HOME/.zshrc"
-        print_message "green" "Added Oh My Posh initialization with JanDeDobbeleer theme to .zshrc"
+    
+    # Install Oh My Posh via Homebrew (easier on macOS)
+    if brew install jandedobbeleer/oh-my-posh/oh-my-posh; then
+        print_message "green" "Oh My Posh installed successfully!"
+        
+        # Add Oh My Posh initialization to .zshrc if not already present
+        if ! grep -q "eval \"\$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json')\"" "$HOME/.zshrc"; then
+            echo 'eval "$(oh-my-posh init zsh --config '"'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json'"')"' >> "$HOME/.zshrc"
+            print_message "green" "Added Oh My Posh initialization with JanDeDobbeleer theme to .zshrc"
+        fi
+    else
+        print_message "red" "Failed to install Oh My Posh via Homebrew, trying manual install..."
+        curl -s https://ohmyposh.dev/install.sh | bash -s
+        
+        # Add Oh My Posh initialization to .zshrc if not already present
+        if ! grep -q "eval \"\$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json')\"" "$HOME/.zshrc"; then
+            echo 'eval "$(oh-my-posh init zsh --config '"'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jandedobbeleer.omp.json'"')"' >> "$HOME/.zshrc"
+            print_message "green" "Added Oh My Posh initialization with JanDeDobbeleer theme to .zshrc"
+        fi
     fi
 fi
 
-# Install neovim
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-sudo apt update && sudo apt -y upgrade
-sudo apt install -y neovim
+# Install neovim via Homebrew (much easier than adding PPAs)
+if command_exists nvim; then
+    print_message "green" "Neovim is already installed"
+else
+    print_message "yellow" "Installing Neovim..."
+    if brew install neovim; then
+        print_message "green" "Neovim installed successfully!"
+    else
+        print_message "red" "Failed to install Neovim"
+    fi
+fi
 
-# Install fzf-tab
-git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
-# Install zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# Install zsh-expand
-cd "$HOME/.oh-my-zsh/custom/plugins" && git clone https://github.com/MenkeTechnologies/zsh-expand.git
-# Install zsh-completions
-git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-# Install colorls via Ruby gems
-sudo gem install colorls
+# Install colorls via Ruby gems (ensure Ruby is available first)
+if command_exists colorls; then
+    print_message "green" "colorls is already installed"
+else
+    print_message "yellow" "Installing colorls..."
+    if gem install colorls; then
+        print_message "green" "colorls installed successfully!"
+    else
+        print_message "red" "Failed to install colorls. You might need to run: sudo gem install colorls"
+    fi
+fi
 
 # Check if requirements.txt exists before pip install
 if [ -f ~/user-default-efs/requirements.txt ]; then
-    pip install -r ~/user-default-efs/requirements.txt
+    pip3 install -r ~/user-default-efs/requirements.txt
 else
-    echo "Warning: requirements.txt not found in ~/user-default-efs/"
+    print_message "yellow" "Warning: requirements.txt not found in ~/user-default-efs/"
 fi
 
-# Change default shell to zsh
+# Change default shell to zsh (if not already zsh)
 if [ "$SHELL" != "$(which zsh)" ]; then
-    sudo chsh -s $(which zsh)
-    print_message "yellow" "Default shell changed to zsh. Please log out and log back in for changes to take effect."
+    print_message "yellow" "Changing default shell to zsh..."
+    chsh -s $(which zsh)
+    print_message "yellow" "Default shell changed to zsh. Please restart your terminal for changes to take effect."
 fi
 
-# Launch zsh
-exec zsh
+print_message "green" "Setup complete! Please restart your terminal to enjoy your new setup."
 
-# Change to home directory
-cd ~
+# Note: Removed exec zsh to prevent script from hanging in non-interactive environments
+# Users can manually start zsh or restart their terminal
